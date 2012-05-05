@@ -119,7 +119,7 @@ class EfiFile(EfiElement):
 		EFI_FV_FILETYPE_FREEFORM				= 0x02
 		EFI_FV_FILETYPE_SECURITY_CORE			= 0x03
 		EFI_FV_FILETYPE_PEI_CORE				= 0x04
-		EFI_FV_FILETYPE_PXE_CORE				= 0x05
+		EFI_FV_FILETYPE_DXE_CORE				= 0x05
 		EFI_FV_FILETYPE_PEIM					= 0x06
 		EFI_FV_FILETYPE_DRIVER					= 0x07
 		EFI_FV_FILETYPE_COMBINED_PEIM_DRIVER	= 0x08
@@ -141,7 +141,7 @@ class EfiFile(EfiElement):
 	def _parse(self):
 		if (self.Type == EfiFile.EFI_FILETYPES.EFI_FV_FILETYPE_FREEFORM or
 		self.Type == EfiFile.EFI_FILETYPES.EFI_FV_FILETYPE_PEI_CORE or
-		self.Type == EfiFile.EFI_FILETYPES.EFI_FV_FILETYPE_PXE_CORE or
+		self.Type == EfiFile.EFI_FILETYPES.EFI_FV_FILETYPE_DXE_CORE or
 		self.Type == EfiFile.EFI_FILETYPES.EFI_FV_FILETYPE_PEIM or
 		self.Type == EfiFile.EFI_FILETYPES.EFI_FV_FILETYPE_DRIVER or
 		self.Type == EfiFile.EFI_FILETYPES.EFI_FV_FILETYPE_COMBINED_PEIM_DRIVER or
@@ -174,7 +174,7 @@ class EfiFile(EfiElement):
 			return "SECURITY_CORE"
 		elif self.Type == self.EFI_FILETYPES.EFI_FV_FILETYPE_PEI_CORE:
 			return "PEI_CORE"
-		elif self.Type == self.EFI_FILETYPES.EFI_FV_FILETYPE_PXE_CORE:
+		elif self.Type == self.EFI_FILETYPES.EFI_FV_FILETYPE_DXE_CORE:
 			return "PXE_CORE"
 		elif self.Type == self.EFI_FILETYPES.EFI_FV_FILETYPE_PEIM:
 			return "PEIM"
@@ -268,7 +268,7 @@ class EfiSection(EfiElement):
 		elif self.SectionType == self.EFI_SECTIONTYPES.EFI_SECTION_TE:
 			return "TE"
 		elif self.SectionType == self.EFI_SECTIONTYPES.EFI_SECTION_DXE_DEPEX:
-			return "DEPEX"
+			return "DXE_DEPEX"
 		elif self.SectionType == self.EFI_SECTIONTYPES.EFI_SECTION_VERSION:
 			return "VERSION"
 		elif self.SectionType == self.EFI_SECTIONTYPES.EFI_SECTION_USER_INTERFACE:
@@ -330,17 +330,19 @@ class EfiFirmwareVolumeSection(EfiSection):
 class EfiVersionSection(EfiSection):
 	def __init__(self, sectionType, data):
 		super(EfiVersionSection, self).__init__(sectionType, data)
-		(self.BuildNumber,) = struct.unpack("<H", self.Data[4:6])
+		#(self.BuildNumber,) = struct.unpack("<H", self.Data[4:6])
+		self.VersionString = unicode(self.Data[4:len(self.Data)-2], "utf-16")
 
 	def __str__(self):
 		result = super(EfiVersionSection, self).__str__()
-		result += "\tBuild Number: %i\n" % self.BuildNumber
+		#result += "\tBuild Number: %i\n" % self.BuildNumber
+		result += "\tVersionString: %s\n" % self.VersionString
 		return result
 
 class EfiUserInterfaceSection(EfiSection):
 	def __init__(self, sectionType, data):
 		super(EfiUserInterfaceSection, self).__init__(sectionType, data)
-		self.String = unicode(self.Data[4:len(data)-4], "utf-16")
+		self.String = unicode(self.Data[4:len(data)-2], "utf-16")
 
 	def __str__(self):
 		result = super(EfiUserInterfaceSection, self).__str__()

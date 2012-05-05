@@ -8,7 +8,7 @@ import argparse
 from EFI import EfiFirmwareImage
 from TreePrinter import EfiTreePrintVisitor
 from EfiTreeFileDumpVisitor import EfiTreeFileDumpVisitor
-#from FDFGenerator import FDFGenerator
+from FDFGenerator import FDFGenerator
 
 def main(argv):
 	parser = argparse.ArgumentParser(description='EFI Firmware exploration tool')
@@ -21,6 +21,9 @@ def main(argv):
 
 	parser_dump = subparsers.add_parser('dump', help='Dump all files in an EFI firmware image into a directory structure')
 	parser_dump.add_argument('destination', nargs=1, type=str, help='The location of the dump')
+
+	parser_genfdf = subparsers.add_parser('genfdf', help='Try to create a EDK2 FDF file for generating a firmware image out of a dump')
+	parser_genfdf.add_argument('dirPrefix', nargs=1, type=str, help='The location of the dump files')
 
 	arguments = parser.parse_args(argv[1:])
 
@@ -42,9 +45,10 @@ def main(argv):
 	if arguments.action == 'dump':
 		d = EfiTreeFileDumpVisitor(arguments.destination[0])
 		d.visit(fw)
-	
-	#fdfgen = FDFGenerator()
-	#fdfgen.generateConfig(fw, "config.fdf")
+
+	if arguments.action == 'genfdf':
+		f = FDFGenerator(arguments.dirPrefix[0])
+		print f.visit(fw)
 
 if __name__ == '__main__':
 	main(sys.argv)

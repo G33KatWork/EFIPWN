@@ -1,0 +1,43 @@
+<% import EFI %>\
+% if firmwareFile.Type == EFI.EfiFile.EFI_FILETYPES.EFI_FV_FILETYPE_RAW:
+FILE RAW = ${firmwareFile.Guid} {
+  ${curDir}/raw_filecontent
+}
+% elif firmwareFile.Type == EFI.EfiFile.EFI_FILETYPES.EFI_FV_FILETYPE_FREEFORM:
+FILE FREEFORM = ${firmwareFile.Guid} {
+${sections}
+}
+% elif firmwareFile.Type == EFI.EfiFile.EFI_FILETYPES.EFI_FV_FILETYPE_SECURITY_CORE:
+FILE SEC = ${firmwareFile.Guid} {
+${sections}
+}
+% elif firmwareFile.Type == EFI.EfiFile.EFI_FILETYPES.EFI_FV_FILETYPE_PEI_CORE:
+FILE PEI_CORE = ${firmwareFile.Guid} {
+${sections}
+}
+% elif firmwareFile.Type == EFI.EfiFile.EFI_FILETYPES.EFI_FV_FILETYPE_DXE_CORE:
+FILE DXE_CORE = ${firmwareFile.Guid} {
+${sections}
+}
+% elif firmwareFile.Type == EFI.EfiFile.EFI_FILETYPES.EFI_FV_FILETYPE_PEIM:
+FILE PEIM = ${firmwareFile.Guid} {
+${sections}
+}
+% elif firmwareFile.Type == EFI.EfiFile.EFI_FILETYPES.EFI_FV_FILETYPE_DRIVER:
+FILE DRIVER = ${firmwareFile.Guid} {
+${sections}
+}
+% elif firmwareFile.Type == EFI.EfiFile.EFI_FILETYPES.EFI_FV_FILETYPE_COMBINED_PEIM_DRIVER:
+FILE PEIM = ${firmwareFile.Guid} {
+${sections}
+}
+% elif firmwareFile.Type == EFI.EfiFile.EFI_FILETYPES.EFI_FV_FILETYPE_APPLICATION:
+FILE APPLICATION = ${firmwareFile.Guid} {
+${sections}
+}
+% elif firmwareFile.Type == EFI.EfiFile.EFI_FILETYPES.EFI_FV_FILETYPE_FIRMWARE_VOLUME_IMAGE:
+FILE FV_IMAGE = ${firmwareFile.Guid} {
+${sections}
+}
+% elif firmwareFile.Type == EFI.EfiFile.EFI_FILETYPES.EFI_FV_FILETYPE_FFS_PAD:
+% endif

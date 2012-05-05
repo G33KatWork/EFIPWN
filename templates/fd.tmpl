@@ -1,0 +1,13 @@
+[FD.OVMF]
+BaseAddress   = 0xFFF00000	<PLZ FILL ME IN!>
+Size          = 0x00100000	<PLZ FILL ME IN!>
+ErasePolarity = 1			<PLZ FILL ME IN!>
+BlockSize     = 0x1000		<PLZ FILL ME IN!>
+NumBlocks     = 0x100		<PLZ FILL ME IN!>
+
+% for v in firmwareImage.firmwareVolumes:
+${hex(v.Base)}|${hex(v.HeaderLength + v.DataLength)}
+FV = FV_${v.volumeIndex}
+% endfor
+
+${firmwareVolumes}

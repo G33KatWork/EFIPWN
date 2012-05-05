@@ -6,8 +6,8 @@ class EfiTreePrintVisitor(ast.NodeVisitor):
     self.indentation = 0
 
   def generic_visit(self, node):
-    print "Unrecognized node: ", type(node).__name__
-    print node
+    logger.error("Unrecognized node: %s " % (type(node).__name__))
+    raise Exception("Unrecognized node: %s " % (type(node).__name__))
     #ast.NodeVisitor.generic_visit(self, node)
 
   def visit_EfiFirmwareImage(self, node):

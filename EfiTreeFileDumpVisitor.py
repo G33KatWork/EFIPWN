@@ -11,8 +11,8 @@ class EfiTreeFileDumpVisitor(ast.NodeVisitor):
     self.uniquenessSuffix = 0
 
   def generic_visit(self, node):
-    logger.error("Unrecognized node: ", type(node).__name__)
-    raise Exception("Unrecognized node: ", type(node).__name__)
+    logger.error("Unrecognized node: %s " % (type(node).__name__))
+    raise Exception("Unrecognized node: %s " % (type(node).__name__))
 
   def visit_EfiFirmwareImage(self, node):
     if not os.path.isdir(self.curDir):
@@ -59,7 +59,7 @@ class EfiTreeFileDumpVisitor(ast.NodeVisitor):
 
   def visit_EfiGenericSection(self, node):
     logger.debug("Dumping version generic section content into directory %s: " % (self.curDir))
-    f = open(os.path.join(self.curDir, "genericSection_" + node._strsectiontype()), "w+b")
+    f = open(os.path.join(self.curDir, node._strsectiontype()), "w+b")
     f.write(node.RawContent)
     f.close()
 
@@ -69,7 +69,9 @@ class EfiTreeFileDumpVisitor(ast.NodeVisitor):
   def visit_EfiVersionSection(self, node):
     logger.debug("Dumping version section content into directory %s: " % (self.curDir))
     f = open(os.path.join(self.curDir, "version.txt"), "w+b")
-    f.write(str(node.BuildNumber))
+    f.write(node.VersionString)
+    #f.write("\n")
+    #f.write(str(node.BuildNumber))
     f.close()
 
   def visit_EfiGuidDefinedSection(self, node):
