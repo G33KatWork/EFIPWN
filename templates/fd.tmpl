@@ -1,9 +1,10 @@
 [FD.OVMF]
-BaseAddress   = 0xFFF00000	<PLZ FILL ME IN!>
-Size          = 0x00100000	<PLZ FILL ME IN!>
-ErasePolarity = 1			<PLZ FILL ME IN!>
-BlockSize     = 0x1000		<PLZ FILL ME IN!>
-NumBlocks     = 0x100		<PLZ FILL ME IN!>
+#FIXME: the following configuration values are hardcoded. Please change them accordingly!
+BaseAddress   = 0xFFF00000
+Size          = 0x00100000
+ErasePolarity = 1
+BlockSize     = 0x1000
+NumBlocks     = 0x100
 
 % for v in firmwareImage.firmwareVolumes:
 ${hex(v.Base)}|${hex(v.HeaderLength + v.DataLength)}

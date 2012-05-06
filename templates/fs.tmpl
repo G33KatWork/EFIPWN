@@ -24,9 +24,7 @@
 % elif section.SectionType == EFI.EfiSection.EFI_SECTIONTYPES.EFI_SECTION_FIRMWARE_VOLUME_IMAGE:
   SECTION FV_IMAGE = ${fvname}
 % elif section.SectionType == EFI.EfiSection.EFI_SECTIONTYPES.EFI_SECTION_FREEFORM_SUBTYPE_GUID:
-  SECTION SUBTYPE_GUID ${str(section.Guid).upper()} {
-  	${curDir}/freeform_guid_defined_${str(section.Guid)}
-  }
+  SECTION SUBTYPE_GUID = ${curDir}/freeform_guid_defined_${str(section.Guid)}
 % elif section.SectionType == EFI.EfiSection.EFI_SECTIONTYPES.EFI_SECTION_RAW:
   SECTION RAW = ${curDir}/RAW
 % elif section.SectionType == EFI.EfiSection.EFI_SECTIONTYPES.EFI_SECTION_PEI_DEPEX:

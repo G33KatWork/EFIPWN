@@ -301,10 +301,13 @@ class EfiCompressedSection(EfiSection):
 		super(EfiCompressedSection, self).__init__(sectionType, data)
 		(self.UncompressedDataLength, self.CompressionType) = struct.unpack("<IB", self.Data[4:4+4+1])
 		uncomp_data = self.Data[4+4+1:]
-		
+
 		if self.CompressionType == 0:
 			self.UncompressedData = uncomp_data
 		elif self.CompressionType == 1:
+			#FIXME: The EfiDecompressor handles TianoCompression, what about EfiCompression?
+			#The used compression algo is either PI_NONE or PI_STD in an FDF file
+			#To use TianoCompression, edit the CompressFunction pointer in GenSec.c in the EDK2
 			self.UncompressedData = EfiDecompressor.Decompress(uncomp_data)
 		else:
 			logger.warning("Found unsupported CompressionType %u", self.CompressionType)
@@ -354,13 +357,13 @@ class EfiFreeformSubtypeGuidSection(EfiSection):
 		super(EfiFreeformSubtypeGuidSection, self).__init__(sectionType, data)
 		(self.Guid,) = struct.unpack("<16s", self.Data[4:4+16])
 		self.Guid = uuid.UUID(bytes_le=self.Guid)
-		self.ContentData = data[4+16:]
+		self.ContentData = self.Data
 		self.DataLength = len(self.ContentData)
 
 	def __str__(self):
 		result = super(EfiFreeformSubtypeGuidSection, self).__str__()
 		result += "\tGUID: %s\n" % self.Guid
-		result += "\tDataLength: 0x%08x\n" % self.DataLength
+		result += "\tDataLength (including full header): 0x%08x\n" % self.DataLength
 		return result
 
 class EfiGuidDefinedSection(EfiSection):
