@@ -9,6 +9,7 @@ class EfiTreeFileDumpVisitor(ast.NodeVisitor):
     self.curDir = os.path.abspath(destinationDirectory)
     self.fvCount = 0
     self.uniquenessSuffix = 0
+    self.sectionUniquenessSuffix = 0
 
   def generic_visit(self, node):
     logger.error("Unrecognized node: %s " % (type(node).__name__))
@@ -59,7 +60,8 @@ class EfiTreeFileDumpVisitor(ast.NodeVisitor):
 
   def visit_EfiGenericSection(self, node):
     logger.debug("Dumping version generic section content into directory %s: " % (self.curDir))
-    f = open(os.path.join(self.curDir, node._strsectiontype()), "w+b")
+    f = open(os.path.join(self.curDir, node._strsectiontype() + "_" + str(self.sectionUniquenessSuffix)), "w+b")
+    self.sectionUniquenessSuffix += 1
     f.write(node.RawContent)
     f.close()
 

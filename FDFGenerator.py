@@ -9,6 +9,7 @@ TEMPLATEDIR = "templates"
 class FDFGenerator(ast.NodeVisitor):
 	def __init__(self, directoryPrefix):
 		self.fvCount = 0
+		self.sectionUniquenessSuffix = 0
 		self.directoryPrefix = directoryPrefix
 		self.nestedFirmwareVolumes = []
 		self.curDir = os.path.normpath(directoryPrefix)
@@ -89,7 +90,9 @@ class FDFGenerator(ast.NodeVisitor):
 
 	def visit_EfiGenericSection(self, node):
 		tmpl = Template(text=self.fsTemplate)
-		return tmpl.render(section=node, curDir=self.curDir)
+		section = tmpl.render(section=node, curDir=self.curDir, sectionUniquenessSuffix=self.sectionUniquenessSuffix)
+		self.sectionUniquenessSuffix += 1
+		return section
 
 	def visit_EfiUserInterfaceSection(self, node):
 		tmpl = Template(text=self.fsTemplate)

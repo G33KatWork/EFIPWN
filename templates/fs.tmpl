@@ -8,13 +8,13 @@
   	${subsections}
   }
 % elif section.SectionType == EFI.EfiSection.EFI_SECTIONTYPES.EFI_SECTION_PE32:
-  SECTION PE32 = ${curDir}/PE32
+  SECTION PE32 = ${curDir}/PE32_${sectionUniquenessSuffix}
 % elif section.SectionType == EFI.EfiSection.EFI_SECTIONTYPES.EFI_SECTION_PIC:
   !!!PIC SECTION NOT YET IMPLEMENTED!!!
 % elif section.SectionType == EFI.EfiSection.EFI_SECTIONTYPES.EFI_SECTION_TE:
   !!!TE SECTION NOT YET IMPLEMENTED!!!
 % elif section.SectionType == EFI.EfiSection.EFI_SECTIONTYPES.EFI_SECTION_DXE_DEPEX:
-  SECTION DXE_DEPEX = ${curDir}/DXE_DEPEX
+  SECTION DXE_DEPEX = ${curDir}/DXE_DEPEX_${sectionUniquenessSuffix}
 % elif section.SectionType == EFI.EfiSection.EFI_SECTIONTYPES.EFI_SECTION_VERSION:
   SECTION VERSION = "${section.VersionString}"
 % elif section.SectionType == EFI.EfiSection.EFI_SECTIONTYPES.EFI_SECTION_USER_INTERFACE:
@@ -26,7 +26,7 @@
 % elif section.SectionType == EFI.EfiSection.EFI_SECTIONTYPES.EFI_SECTION_FREEFORM_SUBTYPE_GUID:
   SECTION SUBTYPE_GUID = ${curDir}/freeform_guid_defined_${str(section.Guid)}
 % elif section.SectionType == EFI.EfiSection.EFI_SECTIONTYPES.EFI_SECTION_RAW:
-  SECTION RAW = ${curDir}/RAW
+  SECTION RAW = ${curDir}/RAW_${sectionUniquenessSuffix}
 % elif section.SectionType == EFI.EfiSection.EFI_SECTIONTYPES.EFI_SECTION_PEI_DEPEX:
-  SECTION PEI_DEPEX = ${curDir}/PEI_DEPEX
+  SECTION PEI_DEPEX = ${curDir}/PEI_DEPEX_${sectionUniquenessSuffix}
 % endif
