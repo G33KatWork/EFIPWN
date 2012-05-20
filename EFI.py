@@ -384,9 +384,8 @@ class EfiGuidDefinedSection(EfiSection):
 			#tmpfileOut = open("extractOut", "w+b")
 			#tmpfileOut.close()
 
-			#os.system("/Users/andy/Desktop/efi/edk/svntrunk/edk2/BaseTools/BinWrappers/Darwin-x86_64/LzmaCompress -d extractIn -o extractOut")
 			fnull = open(os.devnull, 'w')
-			subprocess.check_call(["/Users/andy/Desktop/efi/edk/svntrunk/edk2/BaseTools/BinWrappers/Darwin-x86_64/LzmaCompress", "-d", "extractIn", "-o", "extractOut"], stdout = fnull, stderr = fnull)
+			subprocess.check_call(["<path to edk2>/edk2/BaseTools/BinWrappers/PosixLike/LzmaCompress", "-d", "extractIn", "-o", "extractOut"], stdout = fnull, stderr = fnull)
 			fnull.close()
 
 			tmpfileOut = open("extractOut", "rb")

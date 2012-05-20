@@ -1,0 +1,10 @@
+EFIPWN is an EFI image parser which can dissect EFI Firmware Volumes.
+The three main usecases are printing the structure of an image,
+dumping the contents into a filesystem structure and generating an
+FDF file for regeneration of an image using the EDK2 buildsystem.
+
+Before using this code, you need to setup the EDK2 buildsystem and
+change the path of the LZMACompress binary in EFI.py line 389.
+
+The code is not very failsafe but in most cases it works fine.
+
