@@ -175,7 +175,7 @@ class EfiFile(EfiElement):
 		elif self.Type == self.EFI_FILETYPES.EFI_FV_FILETYPE_PEI_CORE:
 			return "PEI_CORE"
 		elif self.Type == self.EFI_FILETYPES.EFI_FV_FILETYPE_DXE_CORE:
-			return "PXE_CORE"
+			return "DXE_CORE"
 		elif self.Type == self.EFI_FILETYPES.EFI_FV_FILETYPE_PEIM:
 			return "PEIM"
 		elif self.Type == self.EFI_FILETYPES.EFI_FV_FILETYPE_DRIVER:
